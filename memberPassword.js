@@ -22,9 +22,9 @@ ourDb.connect((err) => {
 // insert member db data
 const myDb = mysql.createConnection({
   host: 'localhost',
-  user: 'swfDumpCheckExpnditure',
+  user: 'swftrust',
   password: 'password',
-  database: 'swfDumpCheck'
+  database: 'swf_trust'
 });
 myDb.connect((err) => {
   if (err) {
@@ -44,12 +44,10 @@ function getEmail() {
         console.log('@@@ error of select db data @@@@', err)
         reject(err)
       } else {
-        // console.log('----- query of data member ------', result)
         console.log('----- query of data member ------', result.length)
         var stream = fs.createWriteStream("my_file.txt");
         var memberData = result.map((data) => {
           if (data['email'] === 'guest') {
-            console.log('guest data ', data['email'])
             stream.write(` ======================== \n id : ${data['id']} , \n id_facebook : ${data['id_facebook']} , \n loginName : ${data['loginName']} , \n email : ${data['email']} , \n DOB : ${data['DOB']} , \n Per_mail : ${data['Per_mail']} , \n gender : ${data['gender']} , \n ${data['email']}\n`);
           } else {
             return {
@@ -68,17 +66,14 @@ function getEmail() {
 }
 
 function insertData(res) {
-  console.log('kkkkkkkkdddd=================================', res)
+  console.log('======', res.length)
   res.map((insertData) => {
-    console.log('kkkkklllllll', insertData)
     if (insertData === undefined) {
       console.log('eeeerrrrr')
     } else {
       var saltRounds = 12;
-      console.log('$$$$$$$$ result of password $$$$$', insertData['password'])
       bcrypt.hash(insertData['password'], saltRounds, function (err, hash) {
-        console.log('hashhhhhhhh', hash)
-        console.log('rrrrrrrrrrr', insertData['email'], insertData['userName'])
+        console.log('@@@@@@', hash)
         var role = 'member';
         var source = 'admin';
         var isActive = 1;
