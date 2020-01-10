@@ -48,12 +48,12 @@ function getData() {
         var getExpenditureData = result.map((data) => {
           var year = `${data.Year}`
           var month = `${data.Month}`
-          var myDate = new Date(`${year.trim()}-${month.trim()}-01 14:24:36`);
-          var datefor = moment(myDate).format("YYYY-MM-DD HH:mm:ss")
+          // var myDate = new Date(`${year.trim()}-${month.trim()}-01 14:24:36`);
+          var dateFormatChange = moment(`${year.trim()}-${month.trim()}`, 'YYYY-MMM').format("YYYY-MM-DD HH:mm:ss")
           return {
             amount: data['Amt'],
             comment: data['Comments'],
-            date: datefor
+            date: dateFormatChange
           }
         })
         resolve(getExpenditureData)
